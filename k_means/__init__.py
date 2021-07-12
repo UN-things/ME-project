@@ -44,7 +44,7 @@ class KMeans:
     def __initialize_means(self, X, row_count):
         if self.init_method == 'forgy':
             return forgy(X, row_count, self.k)
-        elif self.init_method == 'maximin':
+        elif self.init_method == 'min_max':
             return min_max(X, self.k)
         elif self.init_method == 'macqueen':
             return macqueen(X, self.k)
