@@ -42,13 +42,13 @@ class KMeans:
         return cost
 
     def __initialize_means(self, X, row_count):
-        if self.init_method == 'forgy':
+        if self.init_method == 'Forgy':
             return forgy(X, row_count, self.k)
-        elif self.init_method == 'min_max':
+        elif self.init_method == 'Min Max':
             return min_max(X, self.k)
-        elif self.init_method == 'macqueen':
+        elif self.init_method == 'Macqueen':
             return macqueen(X, self.k)
-        elif self.init_method == 'var_part':
+        elif self.init_method == 'Var Part':
             return var_part(X, self.k)
         else:
             raise Exception('The initialization method {} does not exist or not implemented'.format(self.init_method))
