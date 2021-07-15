@@ -190,35 +190,33 @@ def print_selected_variables(datos):
     plt.scatter(y=datos['BARTHAG'], x=datos['W'],alpha=0.5, edgecolor='k')
     plt.yticks(fontsize=12)
     plt.ylabel('Prob Ganar', fontsize=12)
-    plt.title('Eficiencia Ofensiva', fontsize=12)
+    plt.title('Partidos Ganados', fontsize=12)
 
     plt.subplot(322)
     plt.scatter(y=datos['BARTHAG'], x=datos['ADJOE'],alpha=0.5, edgecolor='k')
     plt.yticks(fontsize=12)
     plt.ylabel('Prob Ganar', fontsize=12)
-    plt.title('% Tiros efectivos', fontsize=12)
+    plt.title('Eficiencia Defensiva', fontsize=12)
 
 
     plt.subplot(323)
     plt.scatter(y=datos['BARTHAG'], x=datos['EFG_O'],alpha=0.5, edgecolor='k')
     plt.yticks(fontsize=12)
     plt.ylabel('Prob Ganar', fontsize=12)
-    plt.title('% rebote ofensivo', fontsize=12)
+    plt.title('Lanzamientos efectivos', fontsize=12)
 
-
-    # Partidos ganados
     plt.subplot(324)
     plt.scatter(y=datos['BARTHAG'], x=datos['2P_O'],alpha=0.5, edgecolor='k')
     plt.ylabel('Prob Ganar', fontsize=12)
     plt.yticks(fontsize=12)
-    plt.title('% rotación', fontsize=12)
+    plt.title('% rotaciónPorcentaje de tiros de 2 puntos hechos', fontsize=12)
 
 
     plt.subplot(325)
     plt.scatter(y=datos['BARTHAG'], x=datos['WAB'],alpha=0.5, edgecolor='k')
     plt.ylabel('Prob ganar', fontsize=12)
     plt.yticks(fontsize=12)
-    plt.title('% tiros de 2 puntos hechos', fontsize=12)
+    plt.title('Triunfos por encima de la burbuja', fontsize=12)
 
     plt.show()
 
