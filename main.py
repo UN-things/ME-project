@@ -7,7 +7,7 @@ from consolemenu.format import *
 from consolemenu.items import *
 from k_means import KMeans
 
-
+# Reduce la dimensión de la imagen de 3 dimensiones a 2
 def process_image(route_image):
     img_orig = cv2.imread(route_image)
     img_orig = cv2.cvtColor(img_orig, cv2.COLOR_BGR2RGB)
@@ -17,23 +17,34 @@ def process_image(route_image):
 
 
 def print_img(img_orig, img):
-    figure, axis = plt.subplots(2)
+    figure, axis = plt.subplots(2, figsize=(10,10))
+    plt.axis('off')
     axis[0].imshow(img_orig)
+    axis[0].set_title("Imagen Original")
     axis[1].imshow(img)
-    # plt.axis('off')
+    axis[1].set_title("Imagen clusterizada")
+    for a in axis:
+        a.axis('off')
     plt.show()
+    plt.close()
 
 
 def run_k_means(k, init_method):
     img_orig, img = process_image('data/bone_scan.jpg')
     model = KMeans(k=k, init_method=init_method)
+    # cluster_means => k x 3(RGB)
+    # img_with_clusters => 1000 filas-pixeles X 3 (RGB) + 1 (clusters (0-k-1))
     cluster_means, img_with_clusters = model.fit(img)
+    # Matriz de ceros de N_pixeles x 3(RGB)
     compressed_img = np.zeros(img.shape)
 
-    # Assigning each pixel color to its corresponding cluster centroid
+    # Cada pixel pertenece a un cluster, entonces solamente hay k colores
+    # lo que hace el for es cambiar el RGB a cada pixel segun el grupo al que
+    # pertence
     for i, cluster in enumerate(img_with_clusters[:, -1]):
         compressed_img[i, :] = cluster_means[int(cluster)]
 
+    # Rearma la imagen
     compressed_img_reshaped = compressed_img.reshape(img_orig.shape)
     print_img(img_orig, compressed_img_reshaped)
 
@@ -69,10 +80,13 @@ def image_submenu(method):
     menu = ConsoleMenu(title=mn["title"], prologue_text=get_method_info(method),
                        formatter=get_menu_format())
 
-    k_2_item = FunctionItem(mn["item_1"], run_k_means, [int(mn["item_1"]), method])
-    k_3_item = FunctionItem(mn["item_2"], run_k_means, [int(mn["item_2"]), method])
-    k_4_item = FunctionItem(mn["item_3"], run_k_means, [int(mn["item_3"]), method])
-
+    k_2_item = FunctionItem(mn["item_1"], run_k_means, [
+                            int(mn["item_1"]), method])
+    k_3_item = FunctionItem(mn["item_2"], run_k_means, [
+                            int(mn["item_2"]), method])
+    k_4_item = FunctionItem(mn["item_3"], run_k_means, [
+                            int(mn["item_3"]), method])
+    # Seleccionar la cantidad e clusters = k
     menu.append_item(k_2_item)
     menu.append_item(k_3_item)
     menu.append_item(k_4_item)
@@ -99,6 +113,7 @@ def image_menu():
                                image_submenu(mn["item_3"]), menu)
     var_part_item = SubmenuItem(
         mn["item_4"], image_submenu(mn["item_4"]), menu)
+    # seleccionar el método de inicialización
     menu.append_item(forgy_item)
     menu.append_item(macqueen_item)
     menu.append_item(min_max_item)

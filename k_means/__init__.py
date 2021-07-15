@@ -3,7 +3,7 @@ import numpy as np
 class KMeans:
 
     def __init__(self, k = 3, tolerance = 0.01, max_iter = 100, runs = 1,
-                 init_method="forgy"):
+                 init_method="Forgy"):
         """Clustering algorithm that generates groups
 
         Args:
@@ -24,9 +24,9 @@ class KMeans:
         self.max_iter = max_iter
         self.init_method = init_method
 
-        # There is no need to run the algorithm multiple times if the
-        # initialization method is not a random process
-        self.runs = runs if init_method == 'forgy' else 1
+        # El Forgy es aleatorio, los demás métodos son calculados por lo que en
+        # un mismo dataset se calcularían los mismos centroides.
+        self.runs = runs if init_method == 'Forgy' else 1
 
     def __get_values(self, X):
         if isinstance(X, np.ndarray):
